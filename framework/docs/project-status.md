@@ -28,11 +28,12 @@ Implementado:
 - Extraccion heuristica de nombre, empresa, cargo, email, telefono, web y direccion basica.
 - Fallback LLM opcional con proveedor `mistral` u `openai_compatible`.
 - Exports `project_files/exports/outlook.csv` y `project_files/exports/contacts.vcf`.
-- UI web minima compilable en `code/web/dist`.
+- UI React + TypeScript compilable en `code/web/dist`.
 - Visualizacion de tarjeta escaneada al abrir un contacto.
 - Edicion manual de datos desde la UI.
 - Soft delete por contacto usando `visible = 0`.
 - Export CSV/VCF de seleccion visible desde la lista.
+- Asistente OCR para importar entidades detectadas al formulario.
 - Tests backend basicos.
 - `.gitignore` orientado a proteger datos personales y outputs generados.
 
@@ -40,7 +41,6 @@ Pendiente:
 
 - Mejorar separacion de multiples tarjetas dentro de una misma imagen.
 - Mejorar normalizacion de telefonos internacionales y direcciones.
-- UI de edicion manual mas completa.
 - Gestion visual de subida de archivos desde la UI.
 - Benchmark/evaluacion con tarjetas anonimizadas.
 - Sincronizacion directa con Outlook via Microsoft Graph, fuera de v1.
@@ -98,6 +98,16 @@ Motivo:
 - Separa la app real del sistema de trabajo.
 - Permite a agentes usar roles, skills y reglas sin contaminar el scope del producto.
 
+### 006 - Frontend React componentizado
+
+La web deja de ser un script plano y pasa a React + TypeScript + Vite con componentes reutilizables.
+
+Motivo:
+
+- Escala mejor para vistas y flujos mas ricos.
+- Facilita reutilizar tabla, paneles y asistentes en futuros proyectos.
+- Mejora mantenibilidad de interacciones complejas como seleccion, preview, OCR assist y edicion manual.
+
 ## Features
 
 | Feature | Estado | Notas |
@@ -109,7 +119,7 @@ Motivo:
 | Procesamiento `.txt` | Hecho | Util para pruebas sin OCR. |
 | Extraccion heuristica | Hecho | Campos basicos de contacto. |
 | Fallback LLM | Basico | Configurable por `.env`. |
-| UI web minima | Hecho | Tabla, resumen, detalle y procesado. |
+| UI React componentizada | Hecho | Tabla, resumen, detalle, OCR assist y procesado. |
 | Vista previa de tarjeta | Hecho | Imagen/PDF visible desde el panel derecho. |
 | Edicion manual | Hecho | PATCH desde UI sobre el contacto activo. |
 | Soft delete | Hecho | Oculta el contacto con `visible = 0`. |
@@ -122,8 +132,18 @@ Motivo:
 
 Estado Git local:
 
-- A fecha 2026-05-14, esta carpeta no tenia repositorio Git inicializado cuando se implemento el scaffold inicial.
-- Si se inicializa Git, documentar aqui ramas activas y objetivo de cada una.
+- `master` y `web` estaban alineadas antes de empezar el refactor del frontend.
+- El refactor actual se ha desarrollado en la rama `web`.
+
+Registro actual:
+
+```text
+branch: web
+objetivo: refactorizar la web a React componentizado con edicion, preview, OCR assist y export por seleccion
+cambios: Vite + React + TypeScript, componentes reutilizables, asistente OCR en formulario, tabla operativa mas rica
+verificacion: npm install, npm run build, pytest
+riesgos: faltan tests de frontend y subida visual de archivos
+```
 
 Formato recomendado:
 
@@ -150,6 +170,7 @@ npm run build
 Resultado conocido:
 
 - Tests backend: 3 passed.
+- Tests backend: 4 passed.
 - Build frontend: correcto.
 - Prueba manual: procesado de tarjeta `.txt` desde `project_files/raw/cards/`.
 
@@ -173,6 +194,6 @@ No incluir `project_files/` en contexto salvo que se trate de un fixture anonimo
 
 1. Crear fixtures anonimos en `code/tests/fixtures/`.
 2. Mejorar heuristicas con 5-10 tarjetas reales anonimizadas.
-3. Crear pantalla de edicion manual completa.
+3. Añadir subida visual de archivos a la UI React.
 4. Anadir evaluacion de calidad: campos detectados, campos faltantes, confianza media.
 5. Decidir si Outlook Graph entra en v2 o se mantiene solo export.

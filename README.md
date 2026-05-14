@@ -15,7 +15,7 @@ La version actual es local-first:
 - Puede usar LLM como fallback si se configura proveedor compatible.
 - Guarda documentos, OCR y contactos en SQLite.
 - Exporta contactos a CSV compatible con Outlook y a VCF.
-- Sirve una UI web minima desde FastAPI.
+- Sirve una UI React + TypeScript compilada con Vite desde FastAPI.
 
 No incluye todavia:
 
@@ -38,7 +38,7 @@ No incluye todavia:
 │   ├── pyproject.toml             # paquete Python instalable
 │   ├── src/tarjetasvisita/        # backend, pipeline, OCR, SQLite, exports
 │   ├── tests/                     # tests backend
-│   └── web/                       # frontend minimo compilable
+│   └── web/                       # frontend React + TypeScript
 └── project_files/
     ├── raw/cards/                 # escaneos o .txt de entrada
     ├── processed/ocr/             # OCR generado/cacheado
@@ -75,8 +75,17 @@ Para compilar la UI:
 
 ```powershell
 cd code\web
+npm install
 npm run build
 cd ..\..
+```
+
+Para desarrollar la UI con hot reload:
+
+```powershell
+cd code\web
+npm install
+npm run dev
 ```
 
 Para arrancar la aplicacion:
@@ -105,7 +114,9 @@ http://127.0.0.1:8000
    Invoke-RestMethod -Method Post -Uri http://127.0.0.1:8000/api/pipeline/process -ContentType "application/json" -Body '{"mode":"new_or_changed"}'
    ```
 5. Revisa contactos en la UI.
-6. Descarga exports:
+6. Haz click sobre un nombre para abrir la tarjeta, editar campos y reutilizar entidades detectadas por el OCR.
+7. Selecciona los registros que quieras exportar y descarga solo esa seleccion en CSV o VCF.
+8. Descarga exports:
    ```text
    http://127.0.0.1:8000/api/exports/outlook.csv
    http://127.0.0.1:8000/api/exports/contacts.vcf
@@ -154,6 +165,7 @@ Frontend:
 
 ```powershell
 cd code\web
+npm install
 npm run build
 ```
 

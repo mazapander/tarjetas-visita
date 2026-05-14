@@ -21,6 +21,14 @@ Copy-Item ..\.env.example ..\.env
 python -m uvicorn tarjetasvisita.api.app:app --reload
 ```
 
-4. Abre `http://127.0.0.1:8000`.
+4. En otra terminal, para trabajar la UI con Vite:
+
+```powershell
+cd web
+npm install
+npm run dev
+```
+
+5. Abre `http://127.0.0.1:5173` en desarrollo o `http://127.0.0.1:8000` si has hecho `npm run build`.
 
 SQLite, OCR, entidades, exports y reports se guardan en `..\project_files\`.
