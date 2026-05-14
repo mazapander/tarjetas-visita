@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tarjetas de visita</title>
+    <link rel="stylesheet" href="/assets/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Extraccion local</p>
+          <h1>Tarjetas de visita</h1>
+        </div>
+        <div class="actions">
+          <button id="process-button" type="button">Procesar</button>
+          <button id="export-csv-button" type="button">Exportar CSV</button>
+          <button id="export-vcf-button" type="button">Exportar VCF</button>
+        </div>
+      </header>
+
+      <section class="metrics" id="metrics"></section>
+
+      <section class="workspace">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Contactos</h2>
+            <input id="search" type="search" placeholder="Buscar nombre, empresa, email..." />
+          </div>
+          <div id="status" class="status">Cargando...</div>
+          <table>
+            <thead>
+              <tr>
+                <th class="select-col"><input id="select-all" type="checkbox" aria-label="Seleccionar todo" /></th>
+                <th>Nombre</th>
+                <th>Empresa</th>
+                <th>Cargo</th>
+                <th>Contacto</th>
+                <th>Confianza</th>
+                <th class="action-col">X</th>
+              </tr>
+            </thead>
+            <tbody id="contacts"></tbody>
+          </table>
+        </div>
+
+        <aside class="panel detail">
+          <div class="detail-header">
+            <div>
+              <p class="eyebrow">Detalle</p>
+              <h2 id="detail-title">Selecciona un contacto</h2>
+            </div>
+            <button id="save-button" type="button" disabled>Guardar cambios</button>
+          </div>
+
+          <div class="detail-grid">
+            <div class="preview-panel">
+              <div id="preview-frame" class="preview-frame">
+                <p class="empty-state">La tarjeta escaneada aparecera aqui.</p>
+              </div>
+              <a id="open-original" class="secondary-link hidden" target="_blank" rel="noreferrer">Abrir original</a>
+            </div>
+
+            <form id="contact-form" class="contact-form">
+              <label>
+                Nombre completo
+                <input name="full_name" type="text" />
+              </label>
+              <label>
+                Nombre
+                <input name="first_name" type="text" />
+              </label>
+              <label>
+                Apellidos
+                <input name="last_name" type="text" />
+              </label>
+              <label>
+                Empresa
+                <input name="company" type="text" />
+              </label>
+              <label>
+                Cargo
+                <input name="job_title" type="text" />
+              </label>
+              <label>
+                Departamento
+                <input name="department" type="text" />
+              </label>
+              <label>
+                Email
+                <input name="email" type="email" />
+              </label>
+              <label>
+                Movil
+                <input name="mobile" type="text" />
+              </label>
+              <label>
+                Telefono
+                <input name="phone" type="text" />
+              </label>
+              <label>
+                Web
+                <input name="website" type="text" />
+              </label>
+              <label>
+                LinkedIn
+                <input name="linkedin" type="text" />
+              </label>
+              <label class="full-row">
+                Direccion
+                <input name="address" type="text" />
+              </label>
+              <label>
+                Ciudad
+                <input name="city" type="text" />
+              </label>
+              <label>
+                Provincia
+                <input name="province" type="text" />
+              </label>
+              <label>
+                Codigo postal
+                <input name="postal_code" type="text" />
+              </label>
+              <label>
+                Pais
+                <input name="country" type="text" />
+              </label>
+              <label>
+                Confianza
+                <input name="confidence" type="number" min="0" max="1" step="0.01" />
+              </label>
+              <label class="full-row">
+                Notas
+                <textarea name="notes" rows="3"></textarea>
+              </label>
+              <label class="full-row">
+                Warnings
+                <textarea name="warnings" rows="3" placeholder="Una linea por warning"></textarea>
+              </label>
+            </form>
+          </div>
+
+          <details class="ocr-block">
+            <summary>OCR</summary>
+            <pre id="ocr-markdown">Selecciona un contacto para ver el OCR.</pre>
+          </details>
+        </aside>
+      </section>
+    </main>
+    <script type="module" src="/assets/app.js"></script>
+  </body>
+</html>

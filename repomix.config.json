@@ -1,0 +1,44 @@
+{
+  "output": {
+    "filePath": "repomix-output.xml",
+    "style": "xml",
+    "compress": true,
+    "removeComments": false,
+    "removeEmptyLines": true,
+    "showLineNumbers": true
+  },
+  "ignore": {
+    "customPatterns": [
+      "node_modules/**",
+      "dist/**",
+      "build/**",
+      ".venv/**",
+      "venv/**",
+      "__pycache__/**",
+      ".git/**",
+      "*.log",
+      "*.egg-info/**",
+      "*.sqlite",
+      "*.db",
+      ".env",
+      ".env.*",
+      "project_files/raw/**",
+      "project_files/processed/**",
+      "project_files/app/**",
+      "project_files/exports/**",
+      "project_files/reports/**",
+      "*.csv",
+      "*.vcf",
+      "*.pdf",
+      "*.jpg",
+      "*.jpeg",
+      "*.png",
+      "*.tiff",
+      "*.heif",
+      "coverage/**",
+      ".pytest_cache/**",
+      ".mypy_cache/**",
+      ".ruff_cache/**"
+    ]
+  }
+}
