@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "extraKnownMarketplaces": {
+    "ponytail": {
+      "source": {
+        "source": "github",
+        "repo": "DietrichGebert/ponytail"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "ponytail@ponytail": true
+  },
+  "permissions": {
+    "deny": [
+      "Read(./project_files/**)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./code/web/node_modules/**)",
+      "Read(./code/web/dist/**)",
+      "Read(./code/web/package-lock.json)",
+      "Read(./repomix-output.*)"
+    ]
+  }
+}

@@ -49,3 +49,6 @@ project_files/reports/**
 !project_files/exports/.gitkeep
 !project_files/reports/
 !project_files/reports/.gitkeep
+
+# Claude Code local settings
+.claude/settings.local.json
