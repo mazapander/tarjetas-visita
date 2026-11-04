@@ -21,6 +21,8 @@ jobs:
           cache-dependency-path: code/pyproject.toml
       - run: pip install -e "./code[dev]"
       - run: pytest code -q
+      - name: Calidad de extracción (dataset sintético)
+        run: python code/scripts/eval_extraction.py
 
   frontend:
     runs-on: ubuntu-latest
