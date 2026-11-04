@@ -28,6 +28,19 @@ COMPANY_TOKENS = {
     "consulting",
     "technologies",
     "ingenieria",
+    "labs",
+    "tech",
+    "robotics",
+    "hotel",
+    "bodegas",
+    "clinica",
+    "estudio",
+    "asociados",
+    "arquitectura",
+    "construcciones",
+    "ferreteria",
+    "logistica",
+    "alimentaria",
 }
 TITLE_TOKENS = {
     "director",
@@ -45,7 +58,21 @@ TITLE_TOKENS = {
     "marketing",
     "engineer",
     "ingeniero",
+    "head of",
+    "development",
+    "designer",
+    "abogad",
+    "arquitecto",
+    "arquitecta",
+    "fundador",
+    "jefe",
+    "jefa",
+    "cardiolog",
+    "enolog",
+    "fotograf",
+    "geschaftsfuhrer",
 }
+NAME_PREFIXES = ("dr. ", "dra. ", "d. ", "dña. ", "mr. ", "mrs. ", "ms. ")
 ADDRESS_TOKENS = {"calle", "c/", "avenida", "avda", "plaza", "poligono", "paseo", "street", "road"}
 
 
@@ -121,13 +148,21 @@ def _clean_lines(text: str) -> list[str]:
     return lines
 
 
+def _has_token(normalized: str, tokens: set[str]) -> bool:
+    """Tokens cortos ("sa", "sl", "ceo") solo como palabra completa: "sa" no debe casar con "Sarah"."""
+    words = set(normalized.replace(",", " ").split())
+    return any(token in words if len(token) <= 4 else token in normalized for token in tokens)
+
+
 def _is_noise_line(line: str) -> bool:
     normalized = normalize_text(line)
     if not normalized:
         return True
     if "@" in line or "http" in normalized or "www." in normalized:
         return True
-    if re.search(r"\d{5,}", line):
+    if re.fullmatch(r"[\w.-]+\.[a-z]{2,}(/\S*)?", normalized):
+        return True
+    if re.search(r"\d{5,}", line) or len(re.findall(r"\d", line)) >= 6:
         return True
     if any(token in normalized for token in ADDRESS_TOKENS):
         return True
@@ -143,7 +178,7 @@ def _extract_person_name(lines: list[str]) -> str | None:
         words = [word for word in re.split(r"\s+", line) if word]
         if not 2 <= len(words) <= 5:
             continue
-        if any(token in normalized for token in COMPANY_TOKENS | TITLE_TOKENS):
+        if _has_token(normalized, COMPANY_TOKENS | TITLE_TOKENS):
             continue
         if not any(char.isupper() for char in line):
             continue
@@ -152,10 +187,18 @@ def _extract_person_name(lines: list[str]) -> str | None:
             score -= 2
         if any(word[:1].isupper() for word in words):
             score += 4
-        candidates.append((score, line.strip(" -*:")))
+        candidates.append((score, _strip_name_prefix(line.strip(" -*:"))))
     if not candidates:
         return None
     return sorted(candidates, key=lambda item: item[0], reverse=True)[0][1]
+
+
+def _strip_name_prefix(name: str) -> str:
+    lowered = name.lower()
+    for prefix in NAME_PREFIXES:
+        if lowered.startswith(prefix):
+            return name[len(prefix):].strip()
+    return name
 
 
 def _extract_company(lines: list[str], full_name: str | None) -> str | None:
@@ -163,17 +206,17 @@ def _extract_company(lines: list[str], full_name: str | None) -> str | None:
     for line in lines[:14]:
         if _is_noise_line(line):
             continue
-        if full_name and normalize_text(line) == normalize_text(full_name):
+        if full_name and normalize_text(full_name) in normalize_text(line):
             continue
         normalized = normalize_text(line)
         score = 0
-        if any(token in normalized for token in COMPANY_TOKENS):
+        if _has_token(normalized, COMPANY_TOKENS):
             score += 20
         if line == line.upper() and len(line) > 3:
             score += 6
         if len(line.split()) <= 5:
             score += 2
-        if any(token in normalized for token in TITLE_TOKENS):
+        if _has_token(normalized, TITLE_TOKENS):
             score -= 10
         if score > 0:
             candidates.append((score, line.strip(" -*:")))
@@ -184,8 +227,10 @@ def _extract_company(lines: list[str], full_name: str | None) -> str | None:
 
 def _extract_job_title(lines: list[str]) -> str | None:
     for line in lines:
+        if "@" in line:
+            continue
         normalized = normalize_text(line)
-        if any(token in normalized for token in TITLE_TOKENS):
+        if _has_token(normalized, TITLE_TOKENS):
             return line.strip(" -*:")
     return None
 

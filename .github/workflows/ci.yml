@@ -22,7 +22,9 @@ jobs:
       - run: pip install -e "./code[dev]"
       - run: pytest code -q
       - name: Calidad de extracción (dataset sintético)
-        run: python code/scripts/eval_extraction.py
+        run: |
+          python code/scripts/eval_extraction.py
+          python code/scripts/eval_extraction.py --dataset code/tests/fixtures/cards_holdout.jsonl
 
   frontend:
     runs-on: ubuntu-latest
