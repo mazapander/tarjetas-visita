@@ -8,3 +8,12 @@ def test_extract_contact_methods():
     assert extract_phone_numbers(text) == ["+34600123456"]
     assert extract_urls(text) == ["https://www.example.com"]
     assert normalize_phone("+34 600 123 456") == "+34600123456"
+
+
+def test_email_local_part_is_not_a_website():
+    assert extract_urls("lucia.martin@norvalia.example\nnorvalia.example") == ["https://norvalia.example"]
+
+
+def test_phones_on_one_line_separated_by_slash_or_newline_stay_apart():
+    assert extract_phone_numbers("985 23 45 67 / 679 11 22 33") == ["985234567", "679112233"]
+    assert extract_phone_numbers("618 222 333\n50001 Zaragoza") == ["618222333"]
