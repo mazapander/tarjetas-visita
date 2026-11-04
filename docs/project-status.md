@@ -12,7 +12,8 @@ La arquitectura actual separa:
 
 - `code/`: aplicacion, backend, frontend y tests.
 - `project_files/`: documentos, OCR, SQLite, exports y reports.
-- `framework/`: metodologia de trabajo, agentes, skills, prompts y documentacion viva.
+- `docs/internal/`: metodologia de trabajo, agentes, skills y prompts.
+- `docs/project-status.md`: este documento.
 
 ## Estado Actual
 
@@ -91,7 +92,7 @@ Motivo:
 
 ### 005 - Framework como guia operativa
 
-La documentacion metodologica vive en `framework/`.
+La documentacion metodologica vive en `docs/internal/` (antes `framework/`).
 
 Motivo:
 
@@ -179,13 +180,13 @@ Resultado conocido:
 Antes de pedir o hacer cambios:
 
 1. Leer `AGENTS.md`.
-2. Usar `framework/docs/AI_DEV_OPERATING_SYSTEM.md`.
-3. Aplicar `framework/docs/token-optimization.md`.
+2. Usar `docs/internal/docs/AI_DEV_OPERATING_SYSTEM.md`.
+3. Aplicar `docs/internal/docs/token-optimization.md`.
 4. Consultar este documento para estado y decisiones.
 5. Limitar contexto a:
    - issue o peticion actual,
    - `README.md`,
-   - `framework/docs/project-status.md`,
+   - `docs/project-status.md`,
    - archivos concretos bajo `code/` que vayan a tocarse.
 
 No incluir `project_files/` en contexto salvo que se trate de un fixture anonimo o una prueba manual local.

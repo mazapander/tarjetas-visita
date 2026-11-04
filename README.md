@@ -33,7 +33,11 @@ No incluye todavia:
 ├── .env                           # variables locales, no versionado
 ├── .env.example                   # plantilla de configuracion
 ├── AGENTS.md                      # reglas operativas para agentes
-├── framework/                     # metodologia, agentes, skills y docs vivas
+├── CLAUDE.md                      # contexto corto para Claude Code
+├── .claude/settings.json          # plugin ponytail y permisos del agente
+├── docs/
+│   ├── project-status.md          # estado vivo del proyecto
+│   └── internal/                  # metodologia, agentes, skills y prompts
 ├── code/
 │   ├── pyproject.toml             # paquete Python instalable
 │   ├── src/tarjetasvisita/        # backend, pipeline, OCR, SQLite, exports
@@ -185,13 +189,7 @@ Si hacen falta fixtures para tests, deben ser anonimos y vivir dentro de `code/t
 
 ## Metodologia De Trabajo
 
-La metodologia vive en `framework/`:
-
-- `framework/docs/AI_DEV_OPERATING_SYSTEM.md`
-- `framework/docs/token-optimization.md`
-- `framework/docs/project-status.md`
-- `framework/agents/`
-- `framework/skills/`
+La metodologia vive en `docs/internal/` y el estado del proyecto en `docs/project-status.md`.
 
 Para trabajar con IA en este repo:
 
@@ -199,4 +197,4 @@ Para trabajar con IA en este repo:
 2. Preferir `rg --files`, archivos concretos y diffs.
 3. Evitar meter `project_files/` en contexto.
 4. Antes de codificar, devolver analisis, supuestos, riesgos, plan minimo y criterios.
-5. Despues de cambios, actualizar `framework/docs/project-status.md` si cambia el estado del proyecto.
+5. Despues de cambios, actualizar `docs/project-status.md` si cambia el estado del proyecto.

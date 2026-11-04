@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Este repo sigue el sistema de desarrollo definido en `docs/AI_DEV_OPERATING_SYSTEM.md` o en el documento base equivalente del workspace.
+Este repo sigue el sistema de desarrollo definido en `docs/internal/docs/AI_DEV_OPERATING_SYSTEM.md`. El estado vivo del proyecto está en `docs/project-status.md`.
 
 ## Principios obligatorios
 
