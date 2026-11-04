@@ -2,7 +2,7 @@
 
 Documento vivo para entender rapidamente el estado de `ExtraccionTarjetasVisitas`.
 
-Ultima actualizacion: 2026-05-14
+Ultima actualizacion: 2026-11-04
 
 ## Resumen
 
@@ -43,7 +43,7 @@ Pendiente:
 - Mejorar separacion de multiples tarjetas dentro de una misma imagen.
 - Mejorar normalizacion de telefonos internacionales y direcciones.
 - Gestion visual de subida de archivos desde la UI.
-- Benchmark/evaluacion con tarjetas anonimizadas.
+- Evaluacion con tarjetas reales anonimizadas (hoy solo hay datasets sinteticos).
 - Sincronizacion directa con Outlook via Microsoft Graph, fuera de v1.
 - Docker Compose, fuera del scope inicial.
 
@@ -137,6 +137,20 @@ Estado Git local:
 - El refactor actual se ha desarrollado en la rama `web`.
 
 Registro actual:
+
+```text
+branch: feature/fase-0-saneamiento
+objetivo: fase 0 del plan a release publico (PWA movil con escaneo en lote)
+cambios: ponytail + permisos y CLAUDE.md para ahorrar tokens; .env.example;
+         metodologia movida a docs/internal; CI (pytest, eval, build);
+         datasets sinteticos (24 de ajuste + 8 holdout) y eval por campo;
+         correccion de 5 bugs de la heuristica
+verificacion: pytest (8 tests) y eval_extraction en ambos datasets
+riesgos: build del frontend no ejecutado en este entorno (sin cambios en web/);
+         holdout en 83 % de media: nombre/empresa/cargo necesitan la fase 2
+```
+
+Registro anterior:
 
 ```text
 branch: web
